@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>marcador|{% block title %}{% endblock %}</title>
+    {% load static from staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
+    <link rel="stylesheet" href="{% static "css/progress.css" %}">
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/misEstilos.css" %}">
+    <link rel="stylesheet" href="{% static "css/sticky-footer.css" %}">
+    <script src="{% static "js/pace.js" %}"></script>
+    <!--<link rel="stylesheet" href="{{ STATIC_URL }}django_tables2/themes/paleblue/css/screen.css" />-->
+    {% block headExtra %}
+    {% endblock headExtra %}
+</head>
+<body>
+<div class="container-fluid">
+<div class="row">
+<header>
+    <div class="container-fluid">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/home"><div id="nombreapp"><strong>m</strong>arcad<span style="font-size: 0.7em;" class="glyphicon glyphicon-time"></span>r</div></a>
+                </div>
+                {% if user.is_authenticated %}
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span>
+                                    {% if user.perfil.avatar.url_30x30 %}
+                                        <img id="avatar-th" src="{{user.perfil.avatar.url_30x30}}" height="25" width="25"/>                                   
+                                    {% else %}
+                                        <img id="avatar-th" src="{{MEDIA_URL}}/media/avatar_user/generic-user.30x30.png" height="25" width="25"/>
+                                    {% endif %}
+                                </span> 
+                                {% if user.first_name %}
+                                    {{user.first_name}} {{user.last_name}}
+                                {% else %}
+                                    {{user}}
+                                {% endif %}
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container-fluid">
+    <div class="row">
+        <div  class="col-xs-12">
+            {% if user.is_authenticated %}
+                {% block container %}{% endblock container %}
+            {% else %}
+                {% include "base/login.html" %}
+            {% endif %}
+        </div>          
+    </div>
+</div>
+<div class="container-fluid footer">
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="text-align: right"><!--{# <small>&copy; Copyright 2014 <strong>arai</strong>apps. Todos los derechos reservados.</small> #} --> <small>{{tiempo}}</small><a href="#" class="scrollup"></a> <a id="about" ><span class="glyphicon glyphicon-info-sign"></span></a></div>
+        </div>          
+    </div>
+</div>
+<script src="{% static "js/jquery.min.js" %}"></script>
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+<script src="{% static "js/mijs.js" %}"></script> 
+
+</div>
+</div>
+{% block scripts %}
+{% endblock scripts %}
+{% block slider %}
+{% endblock slider %}
+
+<div class="about">
+    <center><img width="250" src="{% static "img/logodevelpy.png" %}"></center>
+    <div class="textual">
+        <br/>Desarrollado con <span style="color:red" class="glyphicon glyphicon-heart"></span> por el team <strong>develpy</strong>
+        <br/>
+        <br/><strong>Ruben Alvarenga</strong>
+        <br/><span class="glyphicon glyphicon-user"></span> @wanderung
+        <br/><span class="glyphicon glyphicon-envelope"></span> rubenalvarengan@gmail.com
+        <br/><span class="glyphicon glyphicon-phone"></span> 0961 865406
+        <br/><br/>
+        <div class="align-right">&copy; Copyright 2016 <strong>develpy</strong></div>
+    </div>
+</div>
+
+    <script type="text/javascript">
+    $(document).on('ready', function(){
+        $('#about').click(function() {
+            $('.about').css("visibility", "visible");
+        }); 
+        $('.about').click(function() {
+            $('.about').css("visibility", "hidden");
+        }); 
+    });
+    </script>
+
+</body>
+</html>

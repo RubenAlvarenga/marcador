@@ -1,0 +1,46 @@
+{% extends "base/full.html" %}
+{% load render_table from django_tables2 %}
+{% load verbose_name_tags %}
+{% block title %}{{ object_list|queryset_verbose_name_plural|capfirst }}{% endblock title %}
+
+{% block content %}
+    {% include "base/cabeceraLista.html" %}
+    {% if object_list %}
+        {% render_table table %}
+        </form><!--IMPORTANTE FORM DE LAS ACCIONES-->
+	{% else %}
+		<div id="paginador">
+		    <ul class="paginfo">
+				<li><small>0 {{ object_list|queryset_verbose_name_plural|capfirst }}</small></li>
+		    </ul>
+		</div>
+    {% endif %}
+
+{% endblock content %}
+<!--globos de ayuda-->
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.checkboxList').click(function() {
+                if ($(this).prop('checked')) {
+                    $(this).parent().parent().css("background", "#FDF887");
+                }else{
+                    $(this).parent().parent('.odd').css("background", "#f9f9f9");
+                    $(this).parent().parent('.even').css("background", "None");
+                };
+            });
+            $('#todosLosCheck').click(function() {
+                if ($(this).prop('checked')) {
+                    $('.odd').css("background", "#FDF887");
+                    $('.even').css("background", "#FDF887");
+                }else{
+                    $('.odd').css("background", "#f9f9f9");
+                    $('.even').css("background", "None");
+                };
+            }); 
+        });
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+    </script>
+{% endblock scripts %}

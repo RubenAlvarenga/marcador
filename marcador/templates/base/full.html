@@ -1,0 +1,13 @@
+{% extends "base/base.html" %}
+{% block container %}
+            <div id="page-content-wrapper" class="col-xs-12">
+                <div id="mensaje">
+                    {% include "base/mensajes.html" %}
+                </div>
+                <div class="row contenido">
+                    <div class="col-xs-12 blockcontent">{% block content %}{% endblock content %}</div>
+                </div>
+            </div>
+{% endblock container %}
+
+    
